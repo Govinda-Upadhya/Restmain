@@ -27,7 +27,6 @@ SECRET_KEY = 'django-insecure-us-vjmq!rb%q(e65vo2$bfoa)xgxk$h4-9ez^f31@9#b7q#l57
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,7 +64,7 @@ ROOT_URLCONF = 'Dimen.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'dist')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,7 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS=[os.path.join(BASE_DIR,'static'),os.path.join(BASE_DIR,'dist/assets')]
+STATIC_ROOT = BASE_DIR /'static'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 MEDIA_URL="/user-media/"
 MEDIA_ROOT=BASE_DIR/'Images'
 
@@ -154,7 +156,7 @@ JAZZMIN_SETTINGS={
     
        
     ],
-    "show_ui_builder": True,
+    "show_ui_builder": False,
 }
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
